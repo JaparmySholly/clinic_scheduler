@@ -1,0 +1,95 @@
+{% extends 'appointments/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Pending Appointment Requests</h2>
+  {% if pending_appointments %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Date & Time</th>
+          <th>Student</th>
+          <th>Reason</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in pending_appointments %}
+          <tr>
+            <td>{{ appt.date_time|date:"Y-m-d H:i" }}</td>
+            <td>{{ appt.student.get_full_name|default:appt.student.username }}</td>
+            <td>{{ appt.reason_for_visit|default:"—" }}</td>
+            <td>
+              <a href="{% url 'appointments:confirm_appointment' appt.id %}"
+                 class="btn btn-sm btn-primary">
+                Review
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No pending appointment requests.</p>
+  {% endif %}
+
+  <hr class="my-4"/>
+
+  <h2>Confirmed Appointments</h2>
+  {% if confirmed_appointments %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date & Time</th>
+          <th>Student</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in confirmed_appointments %}
+          <tr>
+            <td>{{ appt.date_time|date:"Y-m-d H:i" }}</td>
+            <td>{{ appt.student.get_full_name|default:appt.student.username }}</td>
+            <td>{{ appt.reason_for_visit|default:"—" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No confirmed appointments.</p>
+  {% endif %}
+
+  <hr class="my-4"/>
+
+  <h2>My Medical-Test Assignments</h2>
+  {% if test_slots %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Matric No</th>
+          <th>Department</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Ward</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for slot in test_slots %}
+          <tr>
+            <td>{{ slot.student.user.get_full_name|default:slot.student.matric_no }}</td>
+            <td>{{ slot.student.matric_no }}</td>
+            <td>{{ slot.student.department }}</td>
+            <td>{{ slot.scheduled_date|date:"M j, Y" }}</td>
+            <td>{{ slot.scheduled_time|time:"P" }}</td>
+            <td>{{ slot.ward_number }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You have no medical-test slots assigned yet.</p>
+  {% endif %}
+{% endblock %}

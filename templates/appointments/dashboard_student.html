@@ -1,0 +1,79 @@
+{% extends 'appointments/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}My Appointments{% endblock %}
+
+{% block content %}
+  <h2>My Appointments</h2>
+  <p>
+    <a href="{% url 'appointments:book_appointment' %}" class="btn btn-success">
+      Book a New Appointment
+    </a>
+  </p>
+  {% if appointments %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date &amp; Time</th>
+          <th>Staff</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in appointments %}
+          <tr>
+            <td>{{ appt.date_time|date:"Y-m-d H:i" }}</td>
+            <td>{{ appt.staff.username }}</td>
+            <td>{{ appt.get_status_display }}</td>
+            <td>
+              {% if appt.status in 'pending,confirmed' %}
+                <a href="{% url 'appointments:cancel_appointment' appt.id %}"
+                   class="btn btn-sm btn-danger">
+                  Cancel
+                </a>
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You have no appointment records.</p>
+  {% endif %}
+
+  <hr>
+
+  <h2>Your Medical-Test Schedule</h2>
+  <p>
+    <a href="{% url 'appointments:my_medical_schedule' %}" class="btn btn-info">
+      View Full Medical-Test Schedule
+    </a>
+  </p>
+
+  {% if medical_tests %}
+    <table class="table table-bordered mt-3">
+      <thead class="thead-light">
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Ward</th>
+          <th>Staff</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in medical_tests %}
+          <tr>
+            <td>{{ m.scheduled_date|date:"M j, Y" }}</td>
+            <td>{{ m.scheduled_time|time:"P" }}</td>
+            <td>{{ m.ward_number }}</td>
+            <td>{{ m.staff.get_full_name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted">You don’t yet have a medical-test slot. Please check back later.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Clinic Scheduler{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'appointments:dashboard' %}">Clinic Scheduler</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <span class="nav-link">Hello, {{ request.user.get_full_name|default:request.user.username }}</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  <div class="container mt-4">
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

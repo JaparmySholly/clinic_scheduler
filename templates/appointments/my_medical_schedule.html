@@ -1,0 +1,38 @@
+{% extends "appointments/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}My Medical‐Test Schedule{% endblock %}
+
+{% block content %}
+  <h2>My Medical‐Test Schedule</h2>
+
+  {% if medical_tests %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Ward</th>
+          <th>Staff</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for slot in medical_tests %}
+          <tr>
+            <td>{{ slot.scheduled_date|date:"M j, Y" }}</td>
+            <td>{{ slot.scheduled_time|time:"P" }}</td>
+            <td>{{ slot.ward_number }}</td>
+            <td>{{ slot.staff.get_full_name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You don’t have a medical‐test slot assigned yet. Please check back soon.</p>
+  {% endif %}
+
+  <p>
+    <a href="{% url 'appointments:my_appointments' %}" class="btn btn-secondary">
+      ← Back to My Appointments
+    </a>
+  </p>
+{% endblock %}

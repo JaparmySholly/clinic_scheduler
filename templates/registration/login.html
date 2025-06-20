@@ -1,0 +1,20 @@
+{% extends 'appointments/base.html' %}
+{% block title %}Login | Clinic Scheduler{% endblock %}
+{% block content %}
+  <h1>University Clinic Appointment Scheduler</h1>
+  <br>
+  <h5>Enter your Username and Password to Login</h5>
+  <br>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_username">Username:</label>
+      <input type="text" name="username" autofocus required id="id_username" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="id_password">Password:</label>
+      <input type="password" name="password" required id="id_password" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>  
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'appointments/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Review Appointment{% endblock %}
+{% block content %}
+  <h2>Review Appointment Request</h2>
+  <p><strong>Student:</strong> {{ appointment.student.username }}</p>
+  <p><strong>Date & Time:</strong> {{ appointment.date_time|date:"Y-m-d H:i" }}</p>
+  <p><strong>Reason for Visit:</strong> {{ appointment.reason_for_visit|default:"No reason provided." }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" name="action" value="confirm" class="btn btn-success">Confirm</button>
+    <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+    <a href="{% url 'appointments:staff_requests' %}" class="btn btn-secondary">Back</a>
+  </form>
+{% endblock %}

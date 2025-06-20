@@ -1,0 +1,13 @@
+{% extends 'appointments/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Register | Clinic Scheduler{% endblock %}
+{% block content %}
+  <h2>Student Registration</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  <hr />
+  <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+{% endblock %}

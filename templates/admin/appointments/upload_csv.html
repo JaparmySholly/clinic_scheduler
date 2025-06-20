@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Upload Student List for Medical Tests" %}</h1>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="default">
+      {% trans "Process CSV" %}
+    </button>
+    <a href="{% url 'admin:appointments_medicaltestschedule_changelist' %}">
+      {% trans "Back to schedules" %}
+    </a>
+  </form>
+{% endblock %}

@@ -13,7 +13,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://clinic-scheduler-lvvb.onrender.com',
 
-
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

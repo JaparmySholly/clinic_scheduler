@@ -1,0 +1,2 @@
+# enforce LF in the repo, but let Windows check out as CRLF if you like
+* text=auto eol=lf

@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: clinic-scheduler
+    name: clinic_scheduler
     env: python
-    region: Frankfurt (EU Central)   # or choose your region
+    region: frankfurt  
     plan: free
-    disk: 512         # SQLite needs a little disk
+    disk: 512
     buildCommand: |
       pip install -r requirements.txt
       python manage.py migrate --no-input
@@ -15,6 +15,11 @@ services:
         fromSecret: django-secret-key
       - key: DEBUG
         value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        # Either set to "*" to allow all, or comma-separate your domains
+        value: "clinic-scheduler-lvvb.onrender.com"
 secrets:
   - name: django-secret-key
-    secure: <your-secret-here>
+    secure: 713deaac26637e9bb51758a14d2e6b26
+
+

@@ -3,17 +3,9 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '713deaac26637e9bb51758a14d2e6b26'
-DEBUG = False
-ALLOWED_HOSTS = [
-    'clinic-scheduler-lvvb.onrender.com',
-    # any other domains you use
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://clinic-scheduler-lvvb.onrender.com',
-
-]
+ALLOWED_HOSTS = []
+DEBUG = True
+SECRET_KEY = '1234567'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
